@@ -1,0 +1,57 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Brick{
+  
+  static final int ONEHIT = 0,TWOHIT = 1,ITEM = 2;
+  static final int WIDTH = 30, HEIGHT = 10;
+  private int x,y;
+  Color col;
+  
+  public Brick(int x, int y, int type){
+    this.x = (WIDTH * x);
+    this.y = (HEIGHT * y);
+    switch(type){
+      case ONEHIT: 
+        col = Color.RED;
+        break;
+      default:
+        col = Color.RED;
+    }
+  }
+  
+  public void draw(Graphics g){
+    g.setColor(col);
+    g.fillRect(x,y,WIDTH,HEIGHT);
+    g.setColor(Color.WHITE);
+    g.drawRect(x,y,WIDTH,HEIGHT);
+  }
+  
+  public int getX(){
+    return x;
+  }
+  public int getY(){
+    return y;
+  }
+  
+  public boolean isCollision(int ballX, int ballY){
+    if(x <= ballX && x + WIDTH > ballX &&
+       y <= ballY && y + HEIGHT > ballY)
+      return true;  
+    return false;
+  }
+  
+  public boolean hitTopBottom(int ballX, int ballY){
+    if((y+HEIGHT == ballY || y == ballY-10 )&& 
+       x <= ballX && x + WIDTH > ballX)
+      return true;
+    return false;
+  }
+  
+  public boolean hitSides(int ballX, int ballY, boolean movingLeft){
+     if(((x+WIDTH == ballY && movingLeft)|| (x == ballX+10 && !movingLeft) )&& 
+       y < ballY && y + HEIGHT > ballY)
+      return true;
+    return false;
+  }
+}
